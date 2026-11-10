@@ -36,7 +36,7 @@ If you get a message like the one in the screenshot below, that means that WSL i
 
 If you obtain a different message, like the one below, then that means that WSL is already installed. You can skip to step 3.
 
-If you see a table with a distribution you want to use
+If you see a table with a distribution you want to use, skip to the first launch section.
 
 ### Step 2: Installing WSL itself
 
@@ -89,11 +89,67 @@ When this is done you'll get a prompt saying `Create a default Unix user account
 Opt out of the analytics by typing `n` then `Enter` and... we're in!  
 ![Ubuntu prompt](assets/ubuntu-prompt.png)
 
-#### Updating
+### Step 4: Updating
 
 Now that we're inside of the system, the first thing we should do is updating. On Ubuntu (or any Debian-based systems), you can do so by running:
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
-This may take a while, so be patient!.
+This may take a while, so be patient!
+When the updates are done, you'll now have a fully up-to-date Linux environment!
+
+### Step 5: Launching it again
+
+If you ever close the previous window, you may (potentially) want to be able to reopen WSL. You have quite a few options to do so:
+
+#### From Powershell or CMD
+You can run:
+```
+wsl --distribution <Distribution Name>
+```
+You can also alternatively add `--user <User Name>` to launch with a specific **existing** user of the WSL distro you're trying to launch.
+
+#### From the Start Menu
+You can search the name of your installed WSL distro from the Start Menu and launch it like you'd launch an app:
+![Ubuntu in start menu](assets/ubuntu-start-menu.png)
+
+#### From Windows Terminal
+If you have the [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701), you'll see a new option with the name of your distribution in the dropdown menu in Terminal:
+![Ubuntu appear in Terminal dropdown](assets/ubuntu-from-terminal.png)
+## How does it integrates with Windows?
+
+We well see a few of the things that WSL can do in integration with Windows.
+
+### Running GUI apps
+
+You can install GUI apps on WSL and see them in Windows! For example, let's install the GNU Image Manipulation Program (GIMP):
+```bash
+sudo apt install gimp -y
+```
+After it's done installing, you can launch it from the WSL terminal with `gimp`:
+![gimp opens](assets/gimp-open.png)
+It opens! What's even cooler is that it's now also available from the Windows Start menu :
+![gimp in start menu](assets/gimp-start-menu.png)
+(Do note that launching a WSL app from the menu may be slightly slow if your WSL Linux isn't already running as it will have to be started before the app will launch)  
+
+One caveat, as [Microsoft's guide says](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps): 
+>Support for GUI apps on WSL does not provide a full desktop experience. It relies on Windows desktop, so installing desktop-focused tools or apps may not be supported. To request additional support, you can file an issue in the WSLg repo on GitHub.
+
+But normal apps should work fine, thought.
+
+### Running Windows commands in WSL
+
+WSL lets you run Windows binaries inside of your WSL environment. For example, launching Windows' `Explorer.exe` inside of a directory in WSL, just run:
+```
+explorer.exe .
+```
+![explorer.exe opening WSL directory](assets/explorer-exe.png)
+
+### Running Linux commands in Windows
+
+You can do the opposite and run Linux commands on Windows! You just prefix the command you want to run with `wsl`, so for example here, running `ls` in CMD from WSL:
+![ls in CMD](assets/wsl-ls.png)
+Do note that as for launching GUI apps from the Start Menu, if your WSL system is not running yet it can take some time before the commands run, even if it's a simple one.
+
+It can also allow you to run Bash scripts from your Windows drive with `wsl bash .\<script in the local folder>` 
