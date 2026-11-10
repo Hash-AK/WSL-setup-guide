@@ -159,7 +159,7 @@ You may want to access your Linux files from Windows. There's multiple ways of d
 
 #### From Explorer
 You can open Windows' File Explorer. You'll see a new "Linux" option on the left bar. By clicking on it, you'll see the different drives for your installed WSL distros:
-![Linux in Explorer](assets/wsl-linux-explorer.png)
+![Linux in Explorer](assets/wsl-linux-explorer.png)  
 You'll be able to access all of it's subdirectories too, by clicking inside of that folder, but in so cases you may get a "Permission Denied" prompt, like shown here:
 ![Permission denied](assets/wsl-no-admin.png)
 
@@ -185,7 +185,7 @@ explorer.exe .
 ### Running Linux commands in Windows
 
 You can do the opposite and run Linux commands on Windows! You just prefix the command you want to run with `wsl`, so for example here, running `ls` in CMD from WSL:
-![ls in CMD](assets/wsl-ls.png)
+![ls in CMD](assets/wsl-ls.png)  
 Do note that as for launching GUI apps from the Start Menu, if your WSL system is not running yet it can take some time before the commands run, even if it's a simple one.
 
 It can also allow you to run Bash scripts from your Windows drive with `wsl bash .\<script in the local folder>`   
