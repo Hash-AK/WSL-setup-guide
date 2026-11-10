@@ -137,6 +137,41 @@ One caveat, as [Microsoft's guide says](https://learn.microsoft.com/en-us/window
 >Support for GUI apps on WSL does not provide a full desktop experience. It relies on Windows desktop, so installing desktop-focused tools or apps may not be supported. To request additional support, you can file an issue in the WSLg repo on GitHub.
 
 But normal apps should work fine, thought.
+### Accessing Windows files in WSL
+
+You can access your `C:` drive by going in the `/mnt/c` directory:
+```
+cd /mnt/c
+```
+Your C drive content will appear here.
+You can also mount other NTFS mounted drives inside of WSL with:
+```
+sudo mount -t drvfs <Drive Letter>: /mnt/<drive letter>
+```
+for example:
+```
+sudo mount -t drvfs D: /mnt/d
+```
+
+### Accessing Linux files from Windows
+You may want to access you Linux files from Windows. There's multiple ways of doing so:
+
+#### From Explorer
+You can open Windows' File Explorer. You'll see a new "Linux" option on the left bar. By clicking on it, you'll see the different drives for your installed WSL distros:
+![Linux in Explorer](assets/wsl-linux-explorer.png)
+You'll be able to access all of it's subdirectories too, by clicking inside of that folder, but in so cases you may get a "Permission Denied" prompt, like shown here:
+![Permission denied](assets/wsl-no-admin.png)
+
+#### From PowerShell/CMD
+You can also access the WSL directories from PowerShell/CMD. You can do that by opening either of the two, and typing:
+```
+cd \\wsl.localhost\<Name of your distro>
+```
+For example, for me, to access my home folder in my Ubuntu WSL:
+```
+cd \\wsl.localhost\Ubuntu\home\hash-ak
+```
+But again, if you're trying to access something the normal WSL user doesn't have access to (for example `/root`) you'll get an access denied.
 
 ### Running Windows commands in WSL
 
@@ -152,4 +187,8 @@ You can do the opposite and run Linux commands on Windows! You just prefix the c
 ![ls in CMD](assets/wsl-ls.png)
 Do note that as for launching GUI apps from the Start Menu, if your WSL system is not running yet it can take some time before the commands run, even if it's a simple one.
 
-It can also allow you to run Bash scripts from your Windows drive with `wsl bash .\<script in the local folder>` 
+It can also allow you to run Bash scripts from your Windows drive with `wsl bash .\<script in the local folder>`   
+If the script act weirdly or complain about `\r` characters, read the next section!
+
+
+### Problems you may encounter
