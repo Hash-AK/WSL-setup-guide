@@ -14,6 +14,7 @@ to upgrade a specific WSL distro to WSL2.
 ## I'm interested, what are the prerequisites?
 
 You need to have either Windows 11 or Windows 10 version 2004 and higher (Build 19041 and higher). You can verify that by pressing `Windows+R`, then typing `winver`, then enter. You'll see the build number in the window that opens up, like here:  
+
 ![winver window](assets/winver.png)  
 You don't even need it to be an activated copy of Windows! 
 Both ARM64 and x64 (Intel/AMD) CPUs are supported. If you're running Windows in a VM (in which case, honestly, why are you bothering to install WSL?), you must make sure that nested virtualization is enabled.
@@ -25,6 +26,7 @@ I'll guide you through this!
 
 ### Step 1: Checking whether WSL is already installed
 First, open a Windows CMD window as Administrator:
+
 ![Open CMD as Administrator](assets/cmd-admin.png)
 
 In the command prompt that opens up, type the following command to verify if WSL isn't installed already:
@@ -32,9 +34,11 @@ In the command prompt that opens up, type the following command to verify if WSL
 wsl.exe --list --verbose
 ```
 If you get a message like the one in the screenshot below, that means that WSL isn't yet installed on your system, so you can safely press `CTRL+C`.   
+
 ![WSL is not installed](assets/WSL-not-installed.png)
 
 If you obtain a different message, like the one below, then that means that WSL is already installed. You can skip to step 3.  
+
 ![WSL installed but no distros](assets/WSL-installed-no-distro.png)  
 
 If you see a table with a distribution you want to use, skip to the first launch section.
@@ -59,6 +63,7 @@ Now that you have rebooted, check that everything works fine by opening an Admin
 wsl --list --verbose
 ```
 You should get a message telling you that no distribution is currently installed, like shown below:
+
 ![WSL installed but showing no distributions](assets/WSL-installed-no-distro.png)
 
 As the message suggests, we can run:
@@ -66,6 +71,7 @@ As the message suggests, we can run:
 wsl --list --online
 ```
 to list distributions that are available for download. It gives quite a long list:
+
 ![distro list](assets/distro-list.png)
 
 I won't cover what each distribution is, but here's a quick breakdown of the important ones (if you don't know which to pick, a safe choice would be Ubuntu):
@@ -83,11 +89,14 @@ When you're ready, you can run:
 wsl --install <distribution name>
 ```
 to install your chosen distro. Here I'm installing Ubuntu:
+
 ![Ubuntu installing](assets/ubuntu-install.png)
+
 (You may get, like me, a message saying that nested virtualization isn't available. For some reasons it appears but if the installation continues then you're fine).  
 When this is done you'll get a prompt saying `Create a default Unix user account:`. Type the username that you wish to use inside of this WSL instance, then press `Enter`, then choose a password and confirm it.
 
 Opt out of the analytics by typing `n` then `Enter` and... we're in!  
+
 ![Ubuntu prompt](assets/ubuntu-prompt.png)
 
 ### Step 4: Updating
@@ -113,11 +122,14 @@ You can also alternatively add `--user <User Name>` to launch with a specific **
 
 #### From the Start Menu
 You can search the name of your installed WSL distro from the Start Menu and launch it like you'd launch an app:
+
 ![Ubuntu in start menu](assets/ubuntu-start-menu.png)
 
 #### From Windows Terminal
 If you have the [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701), you'll see a new option with the name of your distribution in the dropdown menu in Terminal:
+
 ![Ubuntu appear in Terminal dropdown](assets/ubuntu-from-terminal.png)
+
 ## How does it integrate with Windows?
 
 We will see a few of the things that WSL can do in integration with Windows.
@@ -129,9 +141,13 @@ You can install GUI apps on WSL and see them in Windows! For example, let's inst
 sudo apt install gimp -y
 ```
 After it's done installing, you can launch it from the WSL terminal with `gimp`:
+
 ![gimp opens](assets/gimp-open.png)
+
 It opens! What's even cooler is that it's now also available from the Windows Start menu :
+
 ![gimp in start menu](assets/gimp-start-menu.png)
+
 (Do note that launching a WSL app from the menu may be slightly slow if your WSL Linux isn't already running as it will have to be started before the app will launch)  
 
 One caveat, as [Microsoft's guide says](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps): 
@@ -159,8 +175,10 @@ You may want to access your Linux files from Windows. There's multiple ways of d
 
 #### From Explorer
 You can open Windows' File Explorer. You'll see a new "Linux" option on the left bar. By clicking on it, you'll see the different drives for your installed WSL distros:
+
 ![Linux in Explorer](assets/wsl-linux-explorer.png)  
 You'll be able to access all of it's subdirectories too, by clicking inside of that folder, but in so cases you may get a "Permission Denied" prompt, like shown here:
+
 ![Permission denied](assets/wsl-no-admin.png)
 
 #### From PowerShell/CMD
@@ -180,11 +198,13 @@ WSL lets you run Windows binaries inside of your WSL environment. For example, l
 ```bash
 explorer.exe .
 ```
+
 ![explorer.exe opening WSL directory](assets/explorer-exe.png)
 
 ### Running Linux commands in Windows
 
 You can do the opposite and run Linux commands on Windows! You just prefix the command you want to run with `wsl`, so for example here, running `ls` in CMD from WSL:
+
 ![ls in CMD](assets/wsl-ls.png)  
 Do note that as for launching GUI apps from the Start Menu, if your WSL system is not running yet it can take some time before the commands run, even if it's a simple one.
 
@@ -204,6 +224,7 @@ file <path to the file>
 ```
 inside of your WSL environment (or prefix it with `wsl` if you're inside of PowerShell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
 If you see something like this:  
+
 ![File with CRLF ending](assets/crlf-ending.png)  
 then that means that you first need to convert it to LF. 
 
@@ -215,8 +236,10 @@ When it's done installing, just run:
 ```bash
 dos2unix <path to the file to convert>
 ```
+
 ![converting to LF](assets/converting-to-unix.png)  
 You can verify again with the `file` command afterward:
+
 ![LF fixed](assets/fixed-lf.png)  
 Do note that at least from my testing, reopening the file with Notepad keeps the correct line ending, so you do not need to reconvert it each time.
 
@@ -229,11 +252,13 @@ For example, I want to convert the path to the script on my Windows desktop to W
 ```powershell
 wsl wslpath -ua "'C:\Users\Hash-AK\Desktop\helloworld.sh'"
 ```
+
 ![wslpath convert Windows to Linux](assets/wslpath-ua-w2l.png)  
 The quotes are needed so that neither PowerShell nor WSL strips the backslashes from the Windows path.
 `-ua` means "convert to Linux absolute path".  
 
 To output Windows path from a Linux path, use `-w`:
+
 ![Linux to Windows path conversion using wslpath](assets/wslpath-wa-l2w.png)
 
 ## Your first script: path-convert
