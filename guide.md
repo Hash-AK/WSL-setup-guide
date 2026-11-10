@@ -31,7 +31,7 @@ In the command prompt that opens up, type the following command to verify if WSL
 ```powershell
 wsl.exe --list --verbose
 ```
-If you get a message like the one in the screenshot below, that means that WSL isn't yet installed on your system, so you can safely press `CTRL+C`. 
+If you get a message like the one in the screenshot below, that means that WSL isn't yet installed on your system, so you can safely press `CTRL+C`.   
 ![WSL is not installed](assets/WSL-not-installed.png)
 
 If you obtain a different message, like the one below, then that means that WSL is already installed. You can skip to step 3.
@@ -202,8 +202,8 @@ First of all you can verify if a file has LF or CRLF line ending by running:
 file <path to the file>
 ```
 inside of your WSL environment (or prefix it with `wsl` if you're inside of PowerShell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
-If you see something like this:
-![File with CRLF ending](assets/crlf-ending.png)
+If you see something like this:  
+![File with CRLF ending](assets/crlf-ending.png)  
 then that means that you first need to convert it to LF. 
 
 To do so, install `dos2unix` on your WSL system. On Ubuntu, simply run:
@@ -214,7 +214,7 @@ When it's done installing, just run:
 ```bash
 dos2unix <path to the file to convert>
 ```
-![converting to LF](assets/converting-to-unix.png)
+![converting to LF](assets/converting-to-unix.png)  
 You can verify again with the `file` command afterward:
 ![LF fixed](assets/fixed-lf.png)  
 Do note that at least from my testing, reopening the file with Notepad keeps the correct line ending, so you do not need to reconvert it each time.
