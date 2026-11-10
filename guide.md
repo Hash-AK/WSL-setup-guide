@@ -263,17 +263,18 @@ A quick breakdown of what it does:
 
 Save the file, but make sure to choose "Save as type: All Files" and instead of `.txt` add `.sh` at the end of the file's name.
 
-Then, using `dos2unix`, convert it to an LF ending file.
+Then, using `dos2unix`, convert it to an LF ending file.  
 
-![Converting to LF](assets/creating-script.png)
+![Converting to LF](assets/creating-script.png)  
 
 Finally, to be able to call it from any directory in WSL, you need to add it to the `PATH` variable. You can do so by putting it in `/home/<your user>/.local/bin` (create the directory if it doesn't exist yet):
 ```bash
 cp <path to the file on your desktop> ~/.local/bin/<name of the command without .sh at the end>
 chmod +x ~/.local/bin/<name of the command>
 ```
-Run the above commands from WSL. They put a copy of your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it.
-![Add to PATH](assets/add-path.png)
+Run the above commands from WSL. They put a copy of your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it.  
+
+![Add to PATH](assets/add-path.png)  
 Close your session then reopen it before trying to use your command
 
 Now you can use your newly-created command by running:
