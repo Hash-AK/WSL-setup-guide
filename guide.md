@@ -103,7 +103,7 @@ When the updates are done, you'll now have a fully up-to-date Linux environment!
 
 If you ever close the previous window, you may (potentially) want to be able to reopen WSL. You have quite a few options to do so:
 
-#### From Powershell or CMD
+#### From PowerShell or CMD
 You can run:
 ```powershell
 wsl --distribution <Distribution Name>
@@ -201,7 +201,7 @@ First of all you can verify if a file has LF or CRLF line ending by running:
 ```bash
 file <path to the file>
 ```
-inside of your WSL environment (or prefix it with `wsl` if you're inside of Powershell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
+inside of your WSL environment (or prefix it with `wsl` if you're inside of PowerShell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
 If you see something like this:
 ![File with CRLF ending](assets/crlf-ending.png)
 then that means that you first need to convert it to LF. 
@@ -229,11 +229,64 @@ For example, I want to convert the path to the script on my Windows desktop to W
 wsl wslpath -ua "'C:\Users\Hash-AK\Desktop\helloworld.sh'"
 ```
 ![wslpath convert Windows to Linux](assets/wslpath-ua-w2l.png)  
-The quotes are needed so that neither Powershell nor WSL strips the backslashes from the Windows path.
+The quotes are needed so that neither PowerShell nor WSL strips the backslashes from the Windows path.
 `-ua` means "convert to Linux absolute path".  
 
 To output Windows path from a Linux path, use `-w`:
 ![Linux to Windows path conversion using wslpath](assets/wslpath-wa-l2w.png)
 
+## Your first script: path-convert
+
+Now that you have a fully working Linux environment, let's write a little wrapper around `wslpath` to test out what we learned.
+
+First create a new text file on your (Windows) desktop. Call it whatever you want, I'll call mine `path-convert`.
+
+Open it with Notepad, and paste the following in it:
+```bash
+#!/usr/bin/env bash
+if [[ -z "${1:-}" ]]; then
+    echo "Usage: path-convert <path>" >&2
+    exit 1
+fi
+
+if [[ $1 == *:* ]]; then
+    wslpath -ua "$1"
+else
+    wslpath -wa "$1"
+fi
+```
+A quick breakdown of what it does:
+- The first line (the shebang) makes sure that you can execute the script without specifying what to launch it with(e.g, Bash)
+- `-z "${1:-}"` verify if the passed argument (`$1` in Bash) isn't empty, if it is it will print the usage string
+- `$1 == *:*` verifies if the path contains the string `:` (which is the wrapper's way of knowing if it's a Windows path, like `C:\system\`), if it does it will run the Windows to WSL conversion command
+- Else, it will run the WSL to Windows command.
+
+Save the file, but make sure to choose "Save as type: All Files" and instead of `.txt` add `.sh` at the end of the file's name.
+
+Then, using `dos2unix`, convert it to an LF ending file.
+
+![Converting to LF](assets/creating-script.png)
+
+Finally, to be able to call it from any directory in WSL, you need to add it to the `PATH` variable. You can do so by putting it in `/home/<your user>/.local/bin` (create the directory if it doesn't exist yet):
+```bash
+cp <path to the file on your desktop> ~/.local/bin/<name of the command without .sh at the end>
+chmod +x ~/.local/bin/<name of the command>
+```
+Run the above commands from WSL. They put a copy of your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it.
+![Add to PATH](assets/add-path.png)
+Close your session then reopen it before trying to use your command
+
+Now you can use your newly-created command by running:
+`<name you gave your script> <a path to convert>`  
+
+![It's working!](assets/its-working.png)
+
+As you can see though, you need to quote Windows paths or else backslashes will get stripped.
+
+_(Do note that this wrapper is an example only and won't cover all edge cases, like relative path. Feel free to make it better thought!)_
+
+## Conclusion
+
+If you followed along until here, congrats! You now should have a fully working Linux environment on Windows, and a small path converter script!
 
 
