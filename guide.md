@@ -94,7 +94,7 @@ Opt out of the analytics by typing `n` then `Enter` and... we're in!
 Now that we're inside of the system, the first thing we should do is updating. On Ubuntu (or any Debian-based systems), you can do so by running:
 ```bash
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 ```
 This may take a while, so be patient!
 When the updates are done, you'll now have a fully up-to-date Linux environment!
@@ -191,4 +191,32 @@ It can also allow you to run Bash scripts from your Windows drive with `wsl bash
 If the script act weirdly or complain about `\r` characters, read the next section!
 
 
-### Problems you may encounter
+## Problems you may encounter
+### `bad interpreter` or errors about `\r`
+If you ever try to run a Bash script you wrote inside of Windows (say from Notepad), you may encounter an annoying error where the script fail to start and gives errors like `bad interpreter` or errors about `\r` at the end of some lines while you don't see that `\r` when in Notepad. That's normal and expected.
+
+Linux uses **LF** lines ending, which mean that for Linux a line ends when the `\n` control character is present. Meanwhile, in Windows, **CRLF** is used, which means that a line ends when both `\r` and `\n` is present. So when you run a file edited with a Windows tool inside of Linux, it detects the `\n` file but doesn't get what `\r` is, thus failing. Fixing this is very easy, though!
+
+First of all you can verify if a file has LF or CRLF line ending by running:
+```bash
+file <path to the file>
+```
+inside of your WSL environment (or prefix it with `wsl` if you're inside of Powershell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
+If you see something like this:
+![File with CRLF ending](assets/crlf-ending.png)
+then that means that you first need to convert it to LF. 
+
+To do so, install `dos2unix` on your WSL system. On Ubuntu, simply run:
+```bash
+sudo apt install dos2unix -y
+```
+When it's done installing, just run:
+```bash
+dos2unix <path to the file to convert>
+```
+![converting to LF](assets/converting-to-unix.png)
+You can verify again with the `file` command afterward:
+![LF fixed](assets/fixed-lf.png)  
+Do note that at least from my testing, reopening the file with Notepad keeps the correct line ending, so you do not need to reconvert it each time.
+
+Some distros also ship `unix2dos`, which act like `dos2unix` but the other way around, if it's ever needed
