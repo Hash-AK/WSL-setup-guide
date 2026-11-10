@@ -117,9 +117,9 @@ You can search the name of your installed WSL distro from the Start Menu and lau
 #### From Windows Terminal
 If you have the [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701), you'll see a new option with the name of your distribution in the dropdown menu in Terminal:
 ![Ubuntu appear in Terminal dropdown](assets/ubuntu-from-terminal.png)
-## How does it integrates with Windows?
+## How does it integrate with Windows?
 
-We well see a few of the things that WSL can do in integration with Windows.
+We will see a few of the things that WSL can do in integration with Windows.
 
 ### Running GUI apps
 
@@ -136,7 +136,7 @@ It opens! What's even cooler is that it's now also available from the Windows St
 One caveat, as [Microsoft's guide says](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps): 
 >Support for GUI apps on WSL does not provide a full desktop experience. It relies on Windows desktop, so installing desktop-focused tools or apps may not be supported. To request additional support, you can file an issue in the WSLg repo on GitHub.
 
-But normal apps should work fine, thought.
+But normal apps should work fine, though.
 ### Accessing Windows files in WSL
 
 You can access your `C:` drive by going in the `/mnt/c` directory:
@@ -154,7 +154,7 @@ sudo mount -t drvfs D: /mnt/d
 ```
 
 ### Accessing Linux files from Windows
-You may want to access you Linux files from Windows. There's multiple ways of doing so:
+You may want to access your Linux files from Windows. There's multiple ways of doing so:
 
 #### From Explorer
 You can open Windows' File Explorer. You'll see a new "Linux" option on the left bar. By clicking on it, you'll see the different drives for your installed WSL distros:
