@@ -256,7 +256,7 @@ else
 fi
 ```
 A quick breakdown of what it does:
-- The first line (the shebang) makes sure that you can execute the script without specifying what to launch it with(e.g, Bash)
+- The first line (the shebang) makes sure that you can execute the script without specifying what to launch it with(e.g., Bash)
 - `-z "${1:-}"` verify if the passed argument (`$1` in Bash) isn't empty, if it is it will print the usage string
 - `$1 == *:*` verifies if the path contains the string `:` (which is the wrapper's way of knowing if it's a Windows path, like `C:\system\`), if it does it will run the Windows to WSL conversion command
 - Else, it will run the WSL to Windows command.
@@ -283,7 +283,7 @@ Now you can use your newly-created command by running:
 
 As you can see though, you need to quote Windows paths or else backslashes will get stripped.
 
-_(Do note that this wrapper is an example only and won't cover all edge cases, like relative path. Feel free to make it better thought!)_
+_(Do note that this wrapper is an example only and won't cover all edge cases, like relative path. Feel free to make it better though!)_
 
 ## Conclusion
 
