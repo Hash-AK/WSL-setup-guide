@@ -28,7 +28,7 @@ First, open a Windows CMD window as Administrator:
 ![Open CMD as Administrator](assets/cmd-admin.png)
 
 In the command prompt that opens up, type the following command to verify if WSL isn't installed already:
-```
+```powershell
 wsl.exe --list --verbose
 ```
 If you get a message like the one in the screenshot below, that means that WSL isn't yet installed on your system, so you can safely press `CTRL+C`. 
@@ -43,7 +43,7 @@ If you see a table with a distribution you want to use, skip to the first launch
 Now we can install the WSL feature itself. Usually you install WSL with the default provided Linux distribution (usually Ubuntu), but here I'll show you how to install it with no distribution so we can choose the one we will want to work with in the next step.
 
 Still in your Administrator command prompt, type:
-```
+```powershell
 wsl --install --no-distribution
 ```
 It will install the required components, so this may take a while. If everything goes well, the command should output:
@@ -54,14 +54,14 @@ You can now reboot!
 ### Step 3: Choosing a distribution
 
 Now that you have rebooted, check that everything works fine by opening an Administrator CMD and running again:
-```
+```powershell
 wsl --list --verbose
 ```
 You should get a message telling you that no distribution is currently installed, like shown below:
 ![WSL installed but showing no distributions](assets/WSL-installed-no-distro.png)
 
 As the message suggests, we can run:
-```
+```powershell
 wsl --list --online
 ```
 to list distributions that are available for download. It gives quite a long list:
@@ -78,7 +78,7 @@ I won't cover what each distribution is, but here's a quick breakdown of the imp
 For this guide we will stay with something simple (as we really don't need anything more than running Bash scripts) and we will take Ubuntu. If you prefer to use another distribution, that's your call, just make sure to use the correct package manager command when needed, as for the rest of this guide we will assume that you are using _apt_.
 
 When you're ready, you can run:
-```
+```powershell
 wsl --install <distribution name>
 ```
 to install your chosen distro. Here I'm installing Ubuntu:
@@ -105,7 +105,7 @@ If you ever close the previous window, you may (potentially) want to be able to 
 
 #### From Powershell or CMD
 You can run:
-```
+```powershell
 wsl --distribution <Distribution Name>
 ```
 You can also alternatively add `--user <User Name>` to launch with a specific **existing** user of the WSL distro you're trying to launch.
@@ -140,16 +140,16 @@ But normal apps should work fine, though.
 ### Accessing Windows files in WSL
 
 You can access your `C:` drive by going in the `/mnt/c` directory:
-```
+```bash
 cd /mnt/c
 ```
 Your C drive content will appear here.
 You can also mount other NTFS mounted drives inside of WSL with:
-```
+```bash
 sudo mount -t drvfs <Drive Letter>: /mnt/<drive letter>
 ```
 for example:
-```
+```bash
 sudo mount -t drvfs D: /mnt/d
 ```
 
@@ -164,11 +164,11 @@ You'll be able to access all of it's subdirectories too, by clicking inside of t
 
 #### From PowerShell/CMD
 You can also access the WSL directories from PowerShell/CMD. You can do that by opening either of the two, and typing:
-```
+```powershell
 cd \\wsl.localhost\<Name of your distro>
 ```
 For example, for me, to access my home folder in my Ubuntu WSL:
-```
+```powershell
 cd \\wsl.localhost\Ubuntu\home\hash-ak
 ```
 But again, if you're trying to access something the normal WSL user doesn't have access to (for example `/root`) you'll get an access denied.
@@ -176,7 +176,7 @@ But again, if you're trying to access something the normal WSL user doesn't have
 ### Running Windows commands in WSL
 
 WSL lets you run Windows binaries inside of your WSL environment. For example, launching Windows' `Explorer.exe` inside of a directory in WSL, just run:
-```
+```bash
 explorer.exe .
 ```
 ![explorer.exe opening WSL directory](assets/explorer-exe.png)
