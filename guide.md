@@ -34,7 +34,8 @@ wsl.exe --list --verbose
 If you get a message like the one in the screenshot below, that means that WSL isn't yet installed on your system, so you can safely press `CTRL+C`.   
 ![WSL is not installed](assets/WSL-not-installed.png)
 
-If you obtain a different message, like the one below, then that means that WSL is already installed. You can skip to step 3.
+If you obtain a different message, like the one below, then that means that WSL is already installed. You can skip to step 3.  
+![WSL installed but no distros](assets/WSL-installed-no-distro.png)  
 
 If you see a table with a distribution you want to use, skip to the first launch section.
 
@@ -269,10 +270,10 @@ Then, using `dos2unix`, convert it to an LF ending file.
 
 Finally, to be able to call it from any directory in WSL, you need to add it to the `PATH` variable. You can do so by putting it in `/home/<your user>/.local/bin` (create the directory if it doesn't exist yet):
 ```bash
-cp <path to the file on your desktop> ~/.local/bin/<name of the command without .sh at the end>
+mv <path to the file on your desktop> ~/.local/bin/<name of the command without .sh at the end>
 chmod +x ~/.local/bin/<name of the command>
 ```
-Run the above commands from WSL. They put a copy of your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it.  
+Run the above commands from WSL. They move your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it. Use `cp` instead of `mv` if you want to keep a copy of the script on your desktop.  
 
 ![Add to PATH](assets/add-path.png)  
 Close your session then reopen it before trying to use your command
