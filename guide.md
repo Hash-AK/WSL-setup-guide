@@ -15,7 +15,8 @@ to upgrade a specific WSL distro to WSL2.
 
 You need to have either Windows 11 or Windows 10 version 2004 and higher (Build 19041 and higher). You can verify that by pressing `Windows+R`, then typing `winver`, then enter. You'll see the build number in the window that opens up, like here:  
 
-![winver window](assets/winver.png)  
+![winver window](assets/winver.png)
+
 You don't even need it to be an activated copy of Windows! 
 Both ARM64 and x64 (Intel/AMD) CPUs are supported. If you're running Windows in a VM (in which case, honestly, why are you bothering to install WSL?), you must make sure that nested virtualization is enabled.
 
@@ -176,7 +177,8 @@ You may want to access your Linux files from Windows. There's multiple ways of d
 #### From Explorer
 You can open Windows' File Explorer. You'll see a new "Linux" option on the left bar. By clicking on it, you'll see the different drives for your installed WSL distros:
 
-![Linux in Explorer](assets/wsl-linux-explorer.png)  
+![Linux in Explorer](assets/wsl-linux-explorer.png)
+
 You'll be able to access all of it's subdirectories too, by clicking inside of that folder, but in so cases you may get a "Permission Denied" prompt, like shown here:
 
 ![Permission denied](assets/wsl-no-admin.png)
@@ -205,7 +207,8 @@ explorer.exe .
 
 You can do the opposite and run Linux commands on Windows! You just prefix the command you want to run with `wsl`, so for example here, running `ls` in CMD from WSL:
 
-![ls in CMD](assets/wsl-ls.png)  
+![ls in CMD](assets/wsl-ls.png)
+
 Do note that as for launching GUI apps from the Start Menu, if your WSL system is not running yet it can take some time before the commands run, even if it's a simple one.
 
 It can also allow you to run Bash scripts from your Windows drive with `wsl bash .\<script in the local folder>`   
@@ -225,7 +228,8 @@ file <path to the file>
 inside of your WSL environment (or prefix it with `wsl` if you're inside of PowerShell, as mentioned in the [above section](#running-linux-commands-in-windows)).  
 If you see something like this:  
 
-![File with CRLF ending](assets/crlf-ending.png)  
+![File with CRLF ending](assets/crlf-ending.png)
+
 then that means that you first need to convert it to LF. 
 
 To do so, install `dos2unix` on your WSL system. On Ubuntu, simply run:
@@ -237,10 +241,12 @@ When it's done installing, just run:
 dos2unix <path to the file to convert>
 ```
 
-![converting to LF](assets/converting-to-unix.png)  
+![converting to LF](assets/converting-to-unix.png)
+
 You can verify again with the `file` command afterward:
 
-![LF fixed](assets/fixed-lf.png)  
+![LF fixed](assets/fixed-lf.png)
+
 Do note that at least from my testing, reopening the file with Notepad keeps the correct line ending, so you do not need to reconvert it each time.
 
 Some distros also ship `unix2dos`, which act like `dos2unix` but the other way around, if it's ever needed.
@@ -253,7 +259,8 @@ For example, I want to convert the path to the script on my Windows desktop to W
 wsl wslpath -ua "'C:\Users\Hash-AK\Desktop\helloworld.sh'"
 ```
 
-![wslpath convert Windows to Linux](assets/wslpath-ua-w2l.png)  
+![wslpath convert Windows to Linux](assets/wslpath-ua-w2l.png)
+
 The quotes are needed so that neither PowerShell nor WSL strips the backslashes from the Windows path.
 `-ua` means "convert to Linux absolute path".  
 
@@ -300,7 +307,8 @@ chmod +x ~/.local/bin/<name of the command>
 ```
 Run the above commands from WSL. They move your script in `~/.local/bin`, then add the `x` permission bit, which let you execute it. Use `cp` instead of `mv` if you want to keep a copy of the script on your desktop.  
 
-![Add to PATH](assets/add-path.png)  
+![Add to PATH](assets/add-path.png)
+
 Close your session then reopen it before trying to use your command
 
 Now you can use your newly-created command by running:
