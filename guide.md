@@ -219,4 +219,21 @@ You can verify again with the `file` command afterward:
 ![LF fixed](assets/fixed-lf.png)  
 Do note that at least from my testing, reopening the file with Notepad keeps the correct line ending, so you do not need to reconvert it each time.
 
-Some distros also ship `unix2dos`, which act like `dos2unix` but the other way around, if it's ever needed
+Some distros also ship `unix2dos`, which act like `dos2unix` but the other way around, if it's ever needed.
+
+### Easily converting Windows/Linux paths to Linux/Windows paths
+If you ever need to convert a path from WSL to Windows, or the opposite, WSL ships with a tool called `wslpath` which lets you easily convert one to another.
+
+For example, I want to convert the path to the script on my Windows desktop to WSL to be able to run it. I simply run:
+```powershell
+wsl wslpath -ua "'C:\Users\Hash-AK\Desktop\helloworld.sh'"
+```
+![wslpath convert Windows to Linux](assets/wslpath-ua-w2l.png)  
+The quotes are needed so that neither Powershell nor WSL strips the backslashes from the Windows path.
+`-ua` means "convert to Linux absolute path".  
+
+To output Windows path from a Linux path, use `-w`:
+![Linux to Windows path conversion using wslpath](assets/wslpath-wa-l2w.png)
+
+
+
